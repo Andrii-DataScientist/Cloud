@@ -1,0 +1,9 @@
+aws --version
+
+aws s3 mb s3://andriiitstep1
+
+aws s3api put-bucket-policy --bucket andriiitstep1 --policy file://policy_s3.json
+
+aws s3 sync ./ s3://andriiitstep1/
+
+aws s3 website s3://andriiitstep1 --index-document index.html --error-document error.html
