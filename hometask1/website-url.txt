@@ -1,1 +1,1 @@
-andriiitstep1.s3-website.eu-west-1.amazonaws.com
+andriiitsteplab1.s3-website.us-east-1.amazonaws.com
