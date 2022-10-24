@@ -1,6 +1,0 @@
-Additional commands before running the provision.sh script file:
-
-touch policy_s3.json
-touch provision.sh
-chmod +x provison.sh
-./provision.sh
