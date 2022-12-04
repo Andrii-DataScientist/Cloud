@@ -1,5 +1,4 @@
 #!/bin/bash
-## doesn't work in real-time && aws ec2 stop-instances --instance-ids $INST_ID 
 
 aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text > MyKeyPair.pem \
 && chmod 400 MyKeyPair.pem \
@@ -9,13 +8,7 @@ aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text
 && aws ec2 authorize-security-group-ingress --group-id $SG --protocol tcp --port 22 --cidr 0.0.0.0/0 \
 && aws ec2 authorize-security-group-ingress --group-id $SG  --protocol tcp --port 80 --cidr 0.0.0.0/0 \
 && aws ec2 authorize-security-group-ingress --group-id $SG  --protocol tcp --port 443 --cidr 0.0.0.0/0 \
-&& touch user_script.sh \
-&& echo '#!/bin/bash
-yum update -y
-yum install httpd -y
-systemctl start httpd
-systemctl enable httpd' > user_script.sh \
 && NET_ID=$(aws ec2 describe-subnets --query 'Subnets[0].SubnetId' --output text) \
-&& INST_ID=$(aws ec2 run-instances --image-id ami-0b0dcb5067f052a63 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids $SG --user-data file://user_script.sh --query 'Instances[*].[InstanceId]' --output text) \
+&& INST_ID=$(aws ec2 run-instances --image-id ami-0b0dcb5067f052a63 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids $SG --user-data file://user_data.sh --query 'Instances[*].[InstanceId]' --output text) \
 && aws ec2 create-tags --resources $INST_ID --tags Key=Name,Value=OldInstance \
 && echo $INST_ID 
