@@ -1,7 +1,6 @@
 #!/bin/bash
 aws s3api create-bucket --bucket andrii-lab8 --region us-east-1
 aws s3api create-bucket --bucket andrii-lab8-resized --region us-east-1
-aws s3api create-bucket --bucket aws-sam-cli-managed-default-samclisourcebucket-i6xlmm7wfrs9 --region us-east-1
 aws s3api put-object --bucket andrii-lab8 --key tmp/logo.jpg --body logo.jpg
 aws iam create-policy --policy-name AWSLambdaS3Policy --policy-document file://s3_policy.json
 aws iam create-role --role-name lambda-s3-role --assume-role-policy-document file://trust-policy.json
